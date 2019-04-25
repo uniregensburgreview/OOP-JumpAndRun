@@ -1,0 +1,7 @@
+ï»¿Es soll ein Jump and Run-Spiel implementiert werden.
+Es gibt eine Spielfigur, die unter der Klasse Player implementiert werden soll.
+Die Spielfigur lässt sich über die Leertaste steuern und springt dabei. Sie verändert also ihre Position entlang der y-Achse.
+Ein Hindernis wird neu generiert, sobald das aktuelle Hindernis den Bildschirm verlässt.
+Die Breite wird dabei zufällig bestimmt.
+Zudem soll eine Kollisionsabfrage implementiert werden, die erkennt, wenn die Spielfigur und das Hindernis kollidieren.
+Tritt dieser Fall ein, ist das Spiel beendet.
