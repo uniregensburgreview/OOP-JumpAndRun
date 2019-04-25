@@ -10,6 +10,16 @@ import de.ur.mi.util.RandomGenerator;
 public class PitManager {
 
     /* Min and Max width of the pits */
+    
+    /* Woher ist der Wert 800?
+    * Du solltest keine Magic Numbers verwenden. Da du bereits eine Config-Klasse hast, in der die Breite des Canvas gespeichert ist,
+    * solltest du diese auch verwenden.
+    * Außerdem ändern sich die Werte nicht, weshalb du sie als Konstanten initialisieren solltest:
+    *
+    * private static final int MIN_WIDTH = Configuration.CANVAS_WIDTH / 10;
+    * private static final int MAX_WIDTH = Configuration.CANVAS_WIDTH / 6;
+   *
+    */ 
     private int minWidth = 800 / 10;
     private int maxWidth = 800 / 6;
 
@@ -19,14 +29,17 @@ public class PitManager {
     private double dy; // vertical speed of the pit
     private Counter counter;
  
+    // Variable wird nicht benötigt. Siehe Anmerkung dazu in der checkIfPlayerFallsInPit-Methode
     private boolean fallsInPit;
 
     public PitManager() {
         initRandomGenerator();
+        // keine Magic Numbers
         int minSpeed = -6;
         int maxSpeed = -8;
         initSpeed(minSpeed, maxSpeed);
         newPit();
+        // keine Magic Numbers
         counter = new Counter(10, 50);
     }
 
@@ -75,6 +88,21 @@ public class PitManager {
      * pits stop moving and the Counter is giving back a high score.
      * If the player does not collide with the pit, the counter is adding points.
      */
+    
+    /** Deine Methode lässt sich vereinfachen. Du musst nicht zuerst eine Variable deklarieren, der du einen Wert zuweist,
+    * sondern stattdessen solltest du es lieber so machen:
+    * if(playerBounds.getLeftBorder() >= pit.getLeftBorder() && playerBounds.getRightBorder() <= pit.getRightBorder()
+                && playerBounds.getBottomBorder() >= Configuration.GROUND_Y_POS) {
+    *        dx = 0;
+    *        counter.highScore();
+    *        return true;
+    *   }
+    *    if (playerBounds.getLeftBorder() >= pit.getLeftBorder() && playerBounds.getRightBorder() <= pit.getRightBorder()
+    *            && playerBounds.getBottomBorder() <= Configuration.GROUND_Y_POS) {
+    *        counter.add();
+    *    }
+    *    return false;
+    */
     public boolean checkIfPlayerFallsInPit(Rect playerBounds) {
         fallsInPit = false;
         if(playerBounds.getLeftBorder() >= pit.getLeftBorder() && playerBounds.getRightBorder() <= pit.getRightBorder()
