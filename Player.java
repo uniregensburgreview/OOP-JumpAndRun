@@ -7,14 +7,12 @@ import de.ur.mi.sound.Sound;
  */
 
 public class Player {
-
 	// Hier hättest du die Configuration Klasse benutzen sollen. Config.CANVAS_HEIGHT/2 z.B.
     /* private constants for the jump */
     private static final double MAX_TURN_POINT = CANVAS_HEIGHT/2;
     private static final double X_SPEED = 0;
     private static final double Y_SPEED = -3;
 	
-	// Konstanten immer in Capital Letters
     private static final Sound jump_sound = new Sound("/data/assets/jump.wav");
 
     /* setup for player */
@@ -44,7 +42,6 @@ public class Player {
 
     /* Called to update, move the yPosition of the player */
     public void update() {
-		// jumped muss hier nicht false gesetzt werden, da die Variable damit initialisiert wurde
         if(jumped == false) {
             player.move(dx,dy);
             checkForMaxHeight();
@@ -80,7 +77,6 @@ public class Player {
         if (!jumped) {
             jump_sound.play();
             jumpY = player.getBottomBorder();
-			// Lässt sich vereinfachen durch jumpY = jumpY--;
             jumpY = jumpY - 1;
             jumped = true;
         }
