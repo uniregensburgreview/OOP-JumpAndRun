@@ -8,16 +8,19 @@ import de.ur.mi.sound.Sound;
 
 public class Player {
 
+	// Hier hättest du die Configuration Klasse benutzen sollen. Config.CANVAS_HEIGHT/2 z.B.
     /* private constants for the jump */
-    private static final double MAX_TURN_POINT = Configuration.CANVAS_HEIGHT/2;
+    private static final double MAX_TURN_POINT = CANVAS_HEIGHT/2;
     private static final double X_SPEED = 0;
     private static final double Y_SPEED = -3;
-    private static final Sound JUMP_SOUND = new Sound("/data/assets/jump.wav");
+	
+	// Konstanten immer in Capital Letters
+    private static final Sound jump_sound = new Sound("/data/assets/jump.wav");
 
     /* setup for player */
     private static final Color PLAYER_COLOR = Color.BLACK;
-    private static final int PLAYER_WIDTH = Configuration.CANVAS_WIDTH / 50;
-    private static final int PLAYER_HEIGHT = Configuration.GROUND_HEIGHT / 3;
+    private static final int PLAYER_WIDTH = CANVAS_WIDTH / 50;
+    private static final int PLAYER_HEIGHT = GROUND_HEIGHT / 3;
 
     /* instance variables for player */
     private Rect player; // Represents the player
@@ -29,8 +32,8 @@ public class Player {
     private double jumpY;
 
     public Player() {
-        double xPos = (Configuration.CANVAS_WIDTH / 8);
-        double yPos = Configuration.GROUND_Y_POS - PLAYER_HEIGHT;
+        double xPos =(CANVAS_WIDTH / 8);
+        double yPos = GROUND_Y_POS - PLAYER_HEIGHT;
         int width = PLAYER_WIDTH;
         int height = PLAYER_HEIGHT;
         Color color = PLAYER_COLOR;
@@ -41,7 +44,8 @@ public class Player {
 
     /* Called to update, move the yPosition of the player */
     public void update() {
-        if(jumped) {
+		// jumped muss hier nicht false gesetzt werden, da die Variable damit initialisiert wurde
+        if(jumped == false) {
             player.move(dx,dy);
             checkForMaxHeight();
             checkForGround();
@@ -74,9 +78,10 @@ public class Player {
     /* controls if player jumps upwards */
     public void jump() {
         if (!jumped) {
-            JUMP_SOUND.play();
+            jump_sound.play();
             jumpY = player.getBottomBorder();
-            jumpY--;
+			// Lässt sich vereinfachen durch jumpY = jumpY--;
+            jumpY = jumpY - 1;
             jumped = true;
         }
     }
