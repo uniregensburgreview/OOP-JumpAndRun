@@ -10,14 +10,16 @@ import de.ur.mi.util.RandomGenerator;
 public class PitManager {
 
     /* Min and Max width of the pits */
-    private static final int MIN_WIDTH = Configuration.CANVAS_WIDTH / 10;
-    private static final int MAX_WIDTH = Configuration.CANVAS_WIDTH / 6;
+    private int minWidth = 800 / 10;
+    private int maxWidth = 800 / 6;
 
     private Rect pit;
     private RandomGenerator random;
     private double dx; //horizontal speed of the pit
     private double dy; // vertical speed of the pit
     private Counter counter;
+ 
+    private boolean fallsInPit;
 
     public PitManager() {
         initRandomGenerator();
@@ -39,7 +41,7 @@ public class PitManager {
     private void newPit() {
         double xPos = Configuration.GROUND_WIDTH;
         double yPos = Configuration.GROUND_Y_POS;
-        int width = random.nextInt(MIN_WIDTH, MAX_WIDTH);
+        int width = random.nextInt(minWidth, maxWidth);
         int height = Configuration.GROUND_HEIGHT + 10;
         Color color = Configuration.BACKGROUND_COLOR;
         pit = new Rect(xPos, yPos, width, height, color);
@@ -74,16 +76,18 @@ public class PitManager {
      * If the player does not collide with the pit, the counter is adding points.
      */
     public boolean checkIfPlayerFallsInPit(Rect playerBounds) {
+        fallsInPit = false;
         if(playerBounds.getLeftBorder() >= pit.getLeftBorder() && playerBounds.getRightBorder() <= pit.getRightBorder()
                 && playerBounds.getBottomBorder() >= Configuration.GROUND_Y_POS) {
             dx = 0;
             counter.highScore();
-            return true;
+            fallsInPit = true;
         }
         if (playerBounds.getLeftBorder() >= pit.getLeftBorder() && playerBounds.getRightBorder() <= pit.getRightBorder()
                 && playerBounds.getBottomBorder() <= Configuration.GROUND_Y_POS) {
             counter.add();
         }
-        return false;
+        return fallsInPit;
     }
 }
+
