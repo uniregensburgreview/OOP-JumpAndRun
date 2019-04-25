@@ -7,7 +7,6 @@ import de.ur.mi.sound.Sound;
  */
 
 public class Player {
-	// Hier hättest du die Configuration Klasse benutzen sollen. Config.CANVAS_HEIGHT/2 z.B.
     /* private constants for the jump */
     private static final double MAX_TURN_POINT = CANVAS_HEIGHT/2;
     private static final double X_SPEED = 0;
